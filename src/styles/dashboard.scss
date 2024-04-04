@@ -1,0 +1,28 @@
+.dashboard {
+  display: grid;
+  height: 100%;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
+  gap: 3rem;
+  background-color: #fff;
+ 
+  background: transparent;
+
+  position: relative;
+  &__medication {
+  }
+
+  &__documents {
+   
+    margin-top: 10rem;
+ 
+  }
+  &__appointments {
+   
+
+   overflow-y: scroll;
+  }
+  &__symptoms {
+    margin-top: 10rem;
+  }
+}

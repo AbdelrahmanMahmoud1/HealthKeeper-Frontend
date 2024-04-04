@@ -1,0 +1,24 @@
+.documents {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 3rem;
+
+  &__title {
+    flex: 0 0 25%;
+
+    &-text {
+      font-size: 3rem;
+    }
+  }
+  &__cards {
+    flex: 0 0 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3rem;
+    position: relative;
+    &-card {
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.main-user-section {
+  display: flex;
+   background-color: var(--color-Grey-light-2);
+   min-height: 65vh;
+
+
+  &-background {
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    margin-left: 50%;
+    margin-top: 5%;
+    transform: translateX(-50%);
+    opacity: 0.04;
+   
+  }
+
+  &__sidebar {
+    flex: 0 0 10%;
+  }
+
+  &__main {
+    flex: 0 1 90%;
+    position: relative;
+    padding: 1rem;
+  }
+}

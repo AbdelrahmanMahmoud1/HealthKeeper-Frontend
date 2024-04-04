@@ -1,0 +1,82 @@
+  .medication {
+    display: flex;
+    padding: 2rem;
+    background-color: var(--color-Grey-light-1);
+    flex-direction: column;
+
+    &-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 2rem;
+      &-img {
+        width: 7rem;
+      }
+      &-paragraph {
+        font-size: 3rem;
+      }
+    }
+
+    &-items {
+      padding: 2rem;
+      align-self: flex-start;
+
+      display: flex;
+      flex-wrap: wrap;
+      width: 100%;
+      gap: 2rem;
+
+      &-item:hover {
+        background-color: var(--color-Grey-light-2);
+        cursor: pointer;
+        transform: translateY(-1rem);
+      }
+      &-item {
+        border-radius: 5px;
+        display: flex;
+        flex: 0 0 100%;
+        padding: 2rem;
+        box-shadow: 0 1rem 0.5rem var(--color-Grey-light-4);
+        background-color: #fff;
+
+        &-Cimg {
+          background-color: var(--color-Grey-light-2);
+          border-radius: 50%;
+          background-size: cover;
+          padding: 2rem;
+
+          &-img {
+            display: inline-block;
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        &-Ctext {
+          display: flex;
+
+          flex-wrap: wrap;
+          margin-left: 1rem;
+
+          &-C {
+            flex: 0 0 100%;
+            padding: 0.5rem;
+
+            &-title {
+              font-size: 1.8rem;
+            }
+            &-time {
+              margin-top: 0.45rem;
+
+              font-size: 1.4rem;
+            }
+          }
+
+          &-text {
+            align-self: flex-start;
+            font-size: 1.25rem;
+          }
+        }
+      }
+    }
+  }
