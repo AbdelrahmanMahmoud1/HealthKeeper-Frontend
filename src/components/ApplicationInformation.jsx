@@ -17,7 +17,7 @@ const ApplicationInformation = () => {
         <p className="app-info__info-paragraph">
           With Health Keeper you can easily upload your medical documents safely
           and keep a full record of your prescriptions, diagnoses, X-ray images,
-          lab results, etc.
+          lab results
         </p>
       </div>
     </div>
