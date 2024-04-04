@@ -5,8 +5,8 @@ import Card from "../buildingblocks/Card";
 const MyDocuments = () => {
   return (
     <div className="documents">
-      <div className="u-center-text ">
-        <h2 className="heading-secondary"> Documents</h2>
+      <div className="documents__title">
+        <h1 className="documents__title-text">Documents</h1>
       </div>
       <div className="profile__medical-details-button">
         <a
@@ -44,9 +44,7 @@ const MyDocuments = () => {
         <div className="documents__cards-card">
           <Card />
         </div>
-        <div className="documents__cards-card">
-          <Card />
-        </div>
+        
       </div>
     </div>
   );
