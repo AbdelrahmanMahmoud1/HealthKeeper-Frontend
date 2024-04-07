@@ -12,12 +12,36 @@ import UserDashboard from "./components/UserDashboard";
 import MyDocuments from "./components/MyDocuments";
 import Medications from "./components/Medications";
 import Appointments from "./components/Appointments";
+import PopupCard from "./buildingblocks/PopupCard";
+import { initializeApp } from "firebase/app";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 function App() {
   const [loggedIn, setloggedIn] = useState(true);
+  const [togglePopup, setTogglePopup] = useState(false);
+  const [chronicData, setChronicData] = useState([]);
+const firebaseConfig = {
+  apiKey: "AIzaSyBPvnhrqHg7Z0yDAH3eT3TTjKgiy9br_3o",
+  authDomain: "first-data-base-94a72.firebaseapp.com",
+  databaseURL: "https://first-data-base-94a72-default-rtdb.firebaseio.com",
+  projectId: "first-data-base-94a72",
+  storageBucket: "first-data-base-94a72.appspot.com",
+  messagingSenderId: "230595747981",
+  appId: "1:230595747981:web:b371d7281bf611f5e402c4",
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage();
+const storageRef = ref(storage);
 
   return (
+
+    
     <div className="container">
+      {togglePopup && (
+        <PopupCard togglePopup={setTogglePopup} chronicData={chronicData} />
+      )}
       <Header />
       <BrowserRouter>
         <Routes>
@@ -29,7 +53,7 @@ function App() {
             path="/mydocuments"
             element={
               loggedIn ? (
-                <MainSection component={<MyDocuments />} />
+                <MainSection component={<MyDocuments storage = {storage} />} />
               ) : (
                 "login please"
               )
@@ -53,7 +77,6 @@ function App() {
               ) : (
                 "login please"
               )
-              
             }
           />
           <Route
@@ -70,7 +93,15 @@ function App() {
             path="/profile"
             element={
               loggedIn ? (
-                <MainSection component={<Profile />} />
+                <MainSection
+                  component={
+                    <Profile
+                      togglePopup={setTogglePopup}
+                      setDataToggle={setChronicData}
+                      
+                    />
+                  }
+                />
               ) : (
                 "login please"
               )

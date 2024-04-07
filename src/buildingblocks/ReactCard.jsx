@@ -16,27 +16,29 @@ const bull = (
   </Box>
 );
 
-const card = (
-  <React.Fragment>
-    <CardContent>
-      <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-        Chronic Condition
-      </Typography>
-      <Typography variant="h5" component="div">
-        flu
-      </Typography>
-      <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-        Description: asdasd
-      </Typography>
-      <Typography variant="body2">Diagnosed in: April 2024</Typography>
-    </CardContent>
-  </React.Fragment>
-);
+const card = (name) => {
+  return (
+    <React.Fragment>
+      <CardContent>
+        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+          {name}
+        </Typography>
+        <Typography variant="h5" component="div">
+          flu
+        </Typography>
+        <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
+          Description: asdasd
+        </Typography>
+        <Typography variant="body2">Diagnosed in: April 2024</Typography>
+      </CardContent>
+    </React.Fragment>
+  );
+};
 
-export default function ReactCard() {
+export default function ReactCard(props) {
   return (
     <Box sx={{ minWidth: 300, position: "relative" }}>
-      <Card variant="">{card}</Card>
+      <Card variant="">{card(props.name)}</Card>
       <DeleteOutlineSharpIcon
         sx={{
           transform: "scale(1.5)",

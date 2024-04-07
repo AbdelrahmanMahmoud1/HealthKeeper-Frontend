@@ -8,6 +8,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 const MainSection = ({component }) => {
   return (
     <div className="main-user-section">
+      
       <div className="main-user-section__sidebar">
         <Sidebar />
       </div>

@@ -1,11 +1,11 @@
 .dashboard {
   display: grid;
   height: 100%;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
   grid-template-columns: 2fr 1fr;
   gap: 3rem;
   background-color: #fff;
- 
+
   background: transparent;
 
   position: relative;
@@ -13,16 +13,16 @@
   }
 
   &__documents {
-   
+    grid-column-start: 1;
+    grid-column-end: 3;
     margin-top: 10rem;
- 
   }
   &__appointments {
-   
-
-   overflow-y: scroll;
+    overflow-y: scroll;
   }
   &__symptoms {
+    grid-column-start: 1;
+    grid-column-end: 3;
     margin-top: 10rem;
   }
 }

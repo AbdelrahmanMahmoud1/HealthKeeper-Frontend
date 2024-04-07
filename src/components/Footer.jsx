@@ -3,51 +3,51 @@ import logo from "../assets/img/health-keeper-high-resolution-logo-transparent.p
 
 const Footer = () => {
   return (
-    <footer class="footer">
-      <div class="footer__logo-box" >
-        <img src={logo} alt="" class="footer__logo" style={{padding: "1rem",backgroundColor: "white", borderRadius:"50%"}} />
+    <footer className="footer">
+      <div className="footer__logo-box" >
+        <img src={logo} alt="" className="footer__logo" style={{padding: "1rem",backgroundColor: "white", borderRadius:"50%"}} />
       </div>
-      <div class="row">
-        <div class="col-1-of-2">
-          <div class="footer__navigation">
-            <ul class="footer__list">
-              <li class="footer__item">
-                <a href="" class="footer__link">
+      <div className="row">
+        <div className="col-1-of-2">
+          <div className="footer__navigation">
+            <ul className="footer__list">
+              <li className="footer__item">
+                <a href="" className="footer__link">
                   {" "}
                   Company
                 </a>
               </li>
-              <li class="footer__item">
-                <a href="" class="footer__link">
+              <li className="footer__item">
+                <a href="" className="footer__link">
                   Contact Us
                 </a>
               </li>
-              <li class="footer__item">
-                <a href="" class="footer__link">
+              <li className="footer__item">
+                <a href="" className="footer__link">
                   Carrers
                 </a>
               </li>
-              <li class="footer__item">
-                <a href="" class="footer__link">
+              <li className="footer__item">
+                <a href="" className="footer__link">
                   Privacy Policy
                 </a>
               </li>
-              <li class="footer__item">
-                <a href="" class="footer__link">
+              <li className="footer__item">
+                <a href="" className="footer__link">
                   Terms
                 </a>
               </li>
             </ul>
           </div>
         </div>
-        <div class="col-1-of-2">
-          <p class="footer__copyright">
+        <div className="col-1-of-2">
+          <p className="footer__copyright">
             Built by{" "}
-            <a href="#" class="footer__link">
+            <a href="#" className="footer__link">
               Jonas Schmedtmann
             </a>{" "}
             for his online course{" "}
-            <a href="#" class="footer__link">
+            <a href="#" className="footer__link">
               Advanced CSS and Sass
             </a>
             . Copyright &copy; by Jonas Schmedtmann. You are 100% allowed to use

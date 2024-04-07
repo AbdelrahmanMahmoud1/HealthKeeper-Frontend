@@ -1,0 +1,39 @@
+.popup {
+  background-color: rgba(black, 0.6);
+  z-index: 999999;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__content {
+    background-color: white;
+    width: 90%;
+    height: 50%;
+    max-width: 150rem;
+    min-height: 61%;
+ 
+    position: relative;
+
+    box-shadow: 0rem 1rem 2rem black;
+
+ 
+    animation: popUp 1s;
+
+    &-fields {
+      min-height: 100%;
+    }
+  }
+}
+
+@keyframes popUp {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 100%;
+  }
+}
