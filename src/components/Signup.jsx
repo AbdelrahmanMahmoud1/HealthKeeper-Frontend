@@ -1,6 +1,49 @@
-import React from "react";
+import { React, useEffect, useContext } from "react";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../services/FirebaseService";
+import { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { getUserId, createUser } from "../services/UserProfileService";
+import { userContext } from "../services/context";
 
 const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
+  const { setUser } = useContext(userContext);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    await createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        createUser({ email: user.email }).then(() => {
+          console.log("im here");
+
+          getUserId({ email: user.email }).then((id) => {
+            console.log(id.data);
+            setUser(id.data);
+            localStorage.setItem("id", id.data);
+
+            navigate("/dashboard");
+            console.log(user);
+          });
+        });
+
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
+  };
+
   return (
     <section className="section-book">
       <div className="row">
@@ -10,17 +53,20 @@ const Signup = () => {
               <h2 className="heading-secondary">Sign up</h2>
             </div>
 
-            <form action="#" className="form">
+            <form className="form">
               <div className="form__group">
                 <input
-                  id="username"
-                  placeholder="Username"
+                  id="Email"
+                  placeholder="Email"
                   required
-                  type="text"
+                  type="email"
                   className="form__input"
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
-                <label for="name" className="form__label">
-                  username
+                <label for="Email" className="form__label">
+                  Email
                 </label>
               </div>
 
@@ -31,6 +77,9 @@ const Signup = () => {
                   type="password"
                   required
                   className="form__input"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
                 <label for="email" className="form__label">
                   Password
@@ -50,9 +99,17 @@ const Signup = () => {
                 </label>
               </div>
 
-
               <div className="forn__group" style={{ display: "inline-block" }}>
-                <button className="btn btn--green">Signup &rarr;</button>
+                <NavLink to="/login">
+                  <button className="btn btn--green">Login &rarr;</button>
+                </NavLink>
+                <button
+                  className="btn btn--green"
+                  type="submit"
+                  onClick={onSubmit}
+                >
+                  Signup &rarr;
+                </button>
               </div>
             </form>
           </div>

@@ -10,6 +10,23 @@
 
   position: relative;
   &__medication {
+    &-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      flex-wrap: wrap;
+
+      &-img {
+        flex: 0 0 10%;
+      }
+
+      &-paragraph {
+        flex: 1;
+        font-size: 2vw;
+        flex: 0 0 30%;
+      }
+    }
   }
 
   &__documents {
@@ -19,6 +36,7 @@
   }
   &__appointments {
     overflow-y: scroll;
+    overflow-x: hidden;
   }
   &__symptoms {
     grid-column-start: 1;

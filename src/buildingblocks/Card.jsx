@@ -15,17 +15,25 @@ const Card = (props) => {
   function openFile() {
     window.open(path);
   }
+  function deleteDocument(){
+    props.deleteFun(props.id).then(()=> {
+      alert("DELETED")
+      props.reload(Math.random())
+    });
+  }
   return (
     <div className="cards__card">
       <div onClick={openFile} className="cards__card__img"></div>
-      <div className="cards__card__icons">
-        <DeleteOutlineSharpIcon
+      <div className="cards__card__icons" onClick={deleteDocument}>
+        {props.editable&& <DeleteOutlineSharpIcon
+        
           sx={{
             transform: "scale(1.5)",
             margin: "2rem",
             cursor: "pointer",
           }}
-        />
+          
+        />}
       </div>
 
       <div className="cards__card__details">

@@ -1,36 +1,49 @@
-import { React, useState } from "react";
+import { useEffect, React, useState, useRef, useContext } from "react";
 import "../styles/Documents.scss";
 import Card from "../buildingblocks/Card";
 import AppointmentCard from "../buildingblocks/AppointmentCard";
 
-const Appointments = () => {
-  const [appointmentData, setAppointmentData] = useState([
-    {
-      id: 1,
-      medicationName: "panadol",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 2,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-  ]);
+import {
+  fetchAppointments,
+  deleteAppointments,
+  addAppointments,
+} from "../services/UserProfileService";
+import { userContext } from "../services/context";
+const Appointments = (props) => {
+  const [appointmentData, setAppointmentData] = useState([]);
 
+  const {user} = useContext(userContext);
+  const [reload, setReload] = useState(null);
+  const name = useRef();
+  const time = useRef();
+  const description = useRef();
+  const DoctorName = useRef();
+
+  const chronicData = {
+    fields: [
+      { name: "name", type: "text" },
+      { name: "time", type: "date" },
+      { name: "description", type: "text" },
+      { name: "doctorName", type: "text" },
+    ],
+    refs: [name, time, description, DoctorName],
+    user: user,
+    fun: addAppointments,
+  };
+  useEffect(() => {
+    fetchAppointments(user).then((appointment) => {
+      setAppointmentData([...appointment.data]);
+    });
+  }, [reload]);
+
+  function reloadPage() {
+    alert("DELETED");
+    setReload(Math.random());
+  }
+  function openPopup() {
+    props.setDataToggle(chronicData);
+    props.togglePopup(true);
+  }
   return (
     <div className="documents">
       <div className="u-center-text ">
@@ -41,13 +54,22 @@ const Appointments = () => {
           href="#"
           className="btn btn--green  "
           style={{ fontSize: 12, padding: "2rem" }}
+          onClick={openPopup}
         >
           Add new entry
         </a>
       </div>
-      <div className="documents__cards">
-        <AppointmentCard appointment={appointmentData} />
-      </div>
+      {appointmentData ? (
+        <div className="documents__cards">
+          <AppointmentCard
+            appointment={appointmentData}
+            reload={reloadPage}
+            deleteFun={deleteAppointments}
+          />
+        </div>
+      ) : (
+        <h1>asdasd</h1>
+      )}
     </div>
   );
 };

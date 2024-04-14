@@ -1,20 +1,20 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import "../styles/Documents.scss";
 import Card from "../buildingblocks/Card";
 import axios from "axios";
-import { fetchUserDocuments } from "../services/UserProfileService";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import {
+  fetchUserDocuments,
+  deleteDocument,
+} from "../services/UserProfileService";
+import { userContext } from "../services/context";
 const MyDocuments = () => {
   const [file, setFile] = useState(null);
   const [documents, setDocuments] = useState([{}]);
   const [reload, setReload] = useState(null);
 
+  const { user } = useContext(userContext);
+  useEffect(() => {}, [file]);
 
-  useEffect(() => {
-  
-  
-  }, [file])
-  
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
@@ -22,14 +22,14 @@ const MyDocuments = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append(file.name, file, "773bce3d-0419-4f64-9a36-5e726a3a2e68");
+    formData.append(file.name, file, user);
     try {
       await axios.post(
         "http://127.0.0.1:8000/api/mydocuments/upload/",
         {
           name: file.name,
           file: file,
-          userId: "773bce3d-0419-4f64-9a36-5e726a3a2e68",
+          userId: user,
         },
         {
           headers: {
@@ -37,29 +37,27 @@ const MyDocuments = () => {
           },
         }
       );
-  
+
       alert("File uploaded successfully");
-      setReload(Math.random())
-    
+      console.log("im here");
+      setReload(Math.random());
     } catch (error) {
       alert("Error file");
     }
   };
 
-
   useEffect(() => {
     const fetchData = async (e) => {
       try {
-        await fetchUserDocuments("773bce3d-0419-4f64-9a36-5e726a3a2e68").then(
+        await fetchUserDocuments(user).then(
           (data) => {
             setDocuments(data.data);
           }
         );
       } catch (error) {}
     };
-
     fetchData();
-  }, [file,reload]);
+  }, [file, reload]);
 
   return (
     <div className="documents">
@@ -76,15 +74,22 @@ const MyDocuments = () => {
         </a>
       </div>
       <div className="documents__cards">
-   
-          {documents.map((doc) => {
-
-                 return <div className="documents__cards-card">
-                
-                   <Card key={doc.id} id={doc.id} date={doc.created} name={doc.name} url={doc.url}  />
-                 </div>;
-          })}
-   
+        {documents.map((doc) => {
+          return (
+            <div className="documents__cards-card">
+              <Card
+                key={doc.id}
+                id={doc.id}
+                date={doc.created}
+                name={doc.name}
+                url={doc.url}
+                deleteFun={deleteDocument}
+                reload={setReload}
+                editable={true}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <form onSubmit={handleSubmit}>

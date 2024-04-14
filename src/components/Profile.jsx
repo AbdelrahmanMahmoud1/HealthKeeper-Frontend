@@ -1,16 +1,70 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext, useRef } from "react";
 import "../styles/profile.scss";
 import img from "../assets/img/user-4.jpg";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
 import ReactCard from "../buildingblocks/ReactCard";
-import PopupCard from "../buildingblocks/PopupCard";
-import { fetchUserProfile } from "../services/UserProfileService";
+import {
+  fetchUserProfile,
+  fetchChronicConditions,
+  deleteChronicCondition,
+  addChronicCondition,
+  updateUser,
+} from "../services/UserProfileService";
+import { userContext } from "../services/context";
 const Profile = (props) => {
-  const [user, setUser] = useState({});
+  const { user } = useContext(userContext);
+  const [userData, setUserData] = useState({});
+  const [reload, setReload] = useState(null);
+  const name = useRef();
+  const date = useRef();
+  const description = useRef();
 
+  const username = useRef();
+  const bloodType = useRef();
+  const height = useRef();
+  const weight = useRef();
+  const emergencyNumber = useRef();
+  const mobileNumber = useRef();
+  const email = useRef();
+  const age = useRef(12);
+
+  const formData = {
+    fields: [
+      { name: "name", type: "text" },
+      { name: "date", type: "date" },
+      { name: "description", type: "text" },
+    ],
+    refs: [name, date, description],
+    user: user,
+    fun: addChronicCondition,
+  };
+
+  const userFormData = {
+    fields: [
+      { name: "name", type: "text" },
+      { name: "email", type: "email" },
+      { name: "mobileNumber", type: "number" },
+      { name: "EmergencyMobileNumber", type: "number" },
+      { name: "weight", type: "number" },
+      { name: "height", type: "number" },
+      { name: "age", type: "number" },
+      { name: "bloodType", type: "text" },
+    ],
+    refs: [
+      username,
+      email,
+      mobileNumber,
+      emergencyNumber,
+      weight,
+      height,
+      bloodType,
+      age
+    ],
+    user: user,
+    userData: userData,
+    fun: updateUser,
+  };
   const currencies = [
     {
       value: "A-",
@@ -48,28 +102,56 @@ const Profile = (props) => {
 
   const chronicData = ["Chronic condition", "description", "date"];
 
+  const [chronicConditions, setChronicConditions] = useState([{}]);
+
   function openPopup() {
-    props.setDataToggle(chronicData);
+    props.setDataToggle(formData);
     props.togglePopup(true);
   }
-
+  function openPopup2() {
+    props.setDataToggle(userFormData);
+    props.togglePopup(true);
+  }
   useEffect(() => {
-    service.fetchUserProfile("773bce3d-0419-4f64-9a36-5e726a3a2e68").then((response) => {
-      setUser(response.data);
+    if (!user) {
+      console.log("qweqwe");
+      return;
+    }
+
+    fetchUserProfile(user).then((response) => {
+     
+      setUserData(response.data);
     });
 
-  }, []);
+    fetchChronicConditions(user).then((data) => {
+      console.log(data.data);
+      setChronicConditions(data.data);
+    });
+  }, [user]);
 
-  useEffect(() => {
-  
- 
-  }, [user])
-  
+  useEffect(() => {}, [user]);
 
-
+  function reloadPage() {
+    alert("DELETED");
+    setReload(Math.random());
+  }
 
   return (
     <>
+      <div style={{ position: "relative", height: 50 }}>
+        <a
+          onClick={openPopup2}
+          className="btn btn--green  "
+          style={{
+            fontSize: 12,
+            padding: "2rem",
+            position: "absolute",
+            right: 0,
+          }}
+        >
+          Edit Profile
+        </a>
+      </div>
       <div className="profile">
         <div className="profile__image-box">
           <div className="profile__image-box-C">
@@ -80,7 +162,7 @@ const Profile = (props) => {
                 alt=""
               />
             </div>
-            <h2 className="profile__image-box-C-name">{user.name}</h2>
+            <h2 className="profile__image-box-C-name">{userData.name}</h2>
           </div>
         </div>
         <div className="profile__info">
@@ -88,9 +170,9 @@ const Profile = (props) => {
             <form action="" className="profile__info__form-form">
               <TextField
                 id="outlined-select-currency"
-                key={user.bloodType}
+                key={userData.bloodType}
                 select
-                defaultValue={user.bloodType}
+                defaultValue={userData.bloodType}
                 sx={{
                   width: "30%",
                   color: "black",
@@ -108,8 +190,8 @@ const Profile = (props) => {
                 id="outlined-number"
                 label="height"
                 type="number"
-                key={user.height}
-                defaultValue={user.height}
+                key={userData.height}
+                defaultValue={userData.height}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -118,8 +200,8 @@ const Profile = (props) => {
                 id="outlined-number"
                 label="weight"
                 type="number"
-                key={user.weight}
-                defaultValue={user.weight}
+                key={userData.weight}
+                defaultValue={userData.weight}
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -131,12 +213,14 @@ const Profile = (props) => {
         <div className="profile__personal-details">
           <div className="profile__personal-details-C">
             <h2 className="profile__personal-details-C-label">Email</h2>
-            <p className="profile__personal-details-C-value">{user.email}</p>
+            <p className="profile__personal-details-C-value">
+              {userData.email}
+            </p>
           </div>
           <div className="profile__personal-details-C">
             <h2 className="profile__personal-details-C-label">Mobile Number</h2>
             <p className="profile__personal-details-C-value">
-              {user.mobileNumber}
+              {userData.mobileNumber}
             </p>
           </div>
           <div className="profile__personal-details-C">
@@ -144,7 +228,16 @@ const Profile = (props) => {
               Emergency Number
             </h2>
             <p className="profile__personal-details-C-value">
-              {user.EmergencyMobileNumber}
+              {userData.EmergencyMobileNumber}
+            </p>
+          </div>
+
+          <div className="profile__personal-details-C">
+            <h2 className="profile__personal-details-C-label">
+              Age
+            </h2>
+            <p className="profile__personal-details-C-value">
+              {userData.age}
             </p>
           </div>
         </div>
@@ -157,7 +250,6 @@ const Profile = (props) => {
           <div className="profile__medical-details-button">
             <a
               onClick={openPopup}
-              href="#"
               className="btn btn--green  "
               style={{ fontSize: 12, padding: "2rem" }}
             >
@@ -165,15 +257,21 @@ const Profile = (props) => {
             </a>
           </div>
 
-          <div className="profile__medical-details-card">
-            <ReactCard name="asdasd" />
-          </div>
-          <div className="profile__medical-details-card">
-            <ReactCard />
-          </div>
-          <div className="profile__medical-details-card">
-            <ReactCard />
-          </div>
+          {chronicConditions.map((condition) => {
+            return (
+              <div className="profile__medical-details-card">
+                <ReactCard
+                  key={condition.id}
+                  id={condition.id}
+                  name={condition.name}
+                  description={condition.description}
+                  date={condition.date}
+                  deleteFun={deleteChronicCondition}
+                  reload={reloadPage}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </>

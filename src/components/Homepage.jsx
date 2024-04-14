@@ -5,8 +5,23 @@ import "../App.css";
 import Sidebar from "./Sidebar";
 import ApplicationInformation from "./ApplicationInformation";
 import Features from "./Features";
+import { useContext, useEffect, useState } from "react";
+import { fetchUserProfile } from "../services/UserProfileService";
+import { userContext } from "../services/context";
 
 function Homepage() {
+   const { user } = useContext(userContext);
+
+   const [userData, setUserData] = useState({});
+
+   useEffect(() => {
+     fetchUserProfile(user).then((response) => {
+       setUserData(response.data);
+     });
+
+     return () => {};
+   }, [user]);
+
   return (
     <div className="content">
       <main className="main">
@@ -19,24 +34,28 @@ function Homepage() {
                 record at a time
               </span>
             </h1>
-            <Link to="/login">
-              <a
-                href="#"
-                className="btn btn--white btn--animated"
-                style={{ marginRight: "1rem" }}
-              >
-                Login
-              </a>
-            </Link>
-            <Link to="/signup">
-              <a
-                href="#"
-                className="btn  btn--animated"
-                style={{ backgroundColor: "#0A1D56", color: "#fff" }}
-              >
-                Sign up
-              </a>
-            </Link>
+            {!user && (
+              <>
+                <Link to="/login">
+                  <a
+                    href="#"
+                    className="btn btn--white btn--animated"
+                    style={{ marginRight: "1rem" }}
+                  >
+                    Login
+                  </a>
+                </Link>
+                <Link to="/signup">
+                  <a
+                    href="#"
+                    className="btn  btn--animated"
+                    style={{ backgroundColor: "#0A1D56", color: "#fff" }}
+                  >
+                    Sign up
+                  </a>
+                </Link>
+              </>
+            )}
           </div>
         </header>
         <ApplicationInformation />

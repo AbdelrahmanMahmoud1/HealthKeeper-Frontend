@@ -1,73 +1,63 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import "../styles/dashboard.scss";
 import medicalRecordIcon from "../assets/img/SVG/file-text2.svg";
 import MedicationCard from "../buildingblocks/MedicationCard";
 import AppointmentCard from "../buildingblocks/AppointmentCard";
 import Card from "../buildingblocks/Card";
 import Symptoms from "../buildingblocks/Symptoms";
-
+import {
+  fetchMedications,
+  fetchAppointments,
+  fetchUserDocuments,
+} from "../services/UserProfileService";
+import { userContext } from "../services/context";
 const UserDashboard = () => {
   // let data = [];
 
-  const [data, setData] = useState([
-    {
-      id: 1,
-      medicationName: "panadol",
-      time: "7:00 PM",
-    },
-    {
-      id: 2,
-      medicationName: "panadol extra",
-      time: "7:00 PM",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "8:00 PM",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "8:00 PM",
-    },
-  ]);
+  const [data, setData] = useState([]);
 
-  const [appointmentData, setAppointmentData] = useState([
-    {
-      id: 1,
-      medicationName: "panadol",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 2,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-    {
-      id: 3,
-      medicationName: "panadol extra",
-      time: "Wed jun 20 - 7:00 PM",
-      doctor: "Wael Farag",
-    },
-  ]);
+  const {user} = useContext(userContext);
+  const [medicationsData, setMedicationsData] = useState([]);
+  const [appointmentData, setAppointmentData] = useState([{}]);
+  const [documents, setDocuments] = useState([{}]);
 
-  // function add() {
-  //   console.log(data);
-  //   setData([]);
-  // }
+  useEffect(() => {
+    console.log(user);
+    fetchMedications(user).then((mediactions) => {
+      setMedicationsData(mediactions.data);
+    });
+
+    fetchAppointments(user).then((appointment) => {
+      setAppointmentData([...appointment.data]);
+    });
+
+    const fetchData = async (e) => {
+      try {
+        await fetchUserDocuments(user).then(
+          (data) => {
+            setDocuments([...data.data]);
+          }
+        );
+      } catch (error) {}
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div className="dashboard">
       <div className="dashboard__medication">
-        {data.length == 0 && (
+        <div className="u-center-text ">
+          <h2 className="  heading-secondary"> Medications</h2>
+        </div>
+
+        {medicationsData.length != 0 ? (
+          <>
+            {medicationsData.map((data) => {
+              return <MedicationCard medication={data} editable={false} />;
+            })}
+          </>
+        ) : (
           <div className="dashboard__medication-empty">
             <img
               src={medicalRecordIcon}
@@ -79,29 +69,65 @@ const UserDashboard = () => {
             </p>
           </div>
         )}
-
-        <div className="u-center-text ">
-          <h2 className="  heading-secondary"> Medications</h2>
-        </div>
-
-        <MedicationCard medication={data} />
       </div>
       <div className="dashboard__appointments">
         <div className="u-center-text ">
           <h2 className="heading-secondary"> appointments</h2>
         </div>
         <div className="appointment-items">
-          <AppointmentCard appointment={appointmentData} />
+          {appointmentData.length != 0 ? (
+            <>
+              <AppointmentCard appointment={appointmentData} />{" "}
+            </>
+          ) : (
+            <div className="dashboard__medication-empty">
+              <img
+                src={medicalRecordIcon}
+                alt=""
+                className="dashboard__medication-empty-img"
+              />
+              <p className="dashboard__medication-empty-paragraph">
+                No Data found
+              </p>
+            </div>
+          )}
         </div>
       </div>
+
       <div className="dashboard__documents">
         <div className="u-center-text ">
           <h2 className="heading-secondary"> Documents</h2>
         </div>
         <div className="cards">
-          <Card />
-          <Card />
-          <Card />
+          {documents.length != 0 ? (
+            <>
+              {documents.map((doc) => {
+                return (
+                  <div className="documents__cards-card">
+                    <Card
+                      key={doc.id}
+                      id={doc.id}
+                      date={doc.created}
+                      name={doc.name}
+                      url={doc.url}
+                      editable={false}
+                    />
+                  </div>
+                );
+              })}
+            </>
+          ) : (
+            <div className="dashboard__medication-empty">
+              <img
+                src={medicalRecordIcon}
+                alt=""
+                className="dashboard__medication-empty-img"
+              />
+              <p className="dashboard__medication-empty-paragraph">
+                No Data found
+              </p>
+            </div>
+          )}
         </div>
       </div>
       <div className="dashboard__symptoms">

@@ -16,20 +16,17 @@ const bull = (
   </Box>
 );
 
-const card = (name) => {
+const card = (name, description, date) => {
   return (
     <React.Fragment>
       <CardContent>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-          {name}
-        </Typography>
         <Typography variant="h5" component="div">
-          flu
+          Name: {name}
         </Typography>
         <Typography sx={{ mb: 1.5, fontSize: 12 }} color="text.secondary">
-          Description: asdasd
+          Description: {description}
         </Typography>
-        <Typography variant="body2">Diagnosed in: April 2024</Typography>
+        <Typography variant="body2">Diagnosed in: {date}</Typography>
       </CardContent>
     </React.Fragment>
   );
@@ -38,27 +35,24 @@ const card = (name) => {
 export default function ReactCard(props) {
   return (
     <Box sx={{ minWidth: 300, position: "relative" }}>
-      <Card variant="">{card(props.name)}</Card>
-      <DeleteOutlineSharpIcon
-        sx={{
-          transform: "scale(1.5)",
-          position: "absolute",
-          margin: "2rem",
-          top: 0,
-          right: 0,
-          cursor: "pointer",
-        }}
-      />
-      <EditSharpIcon
-        sx={{
-          transform: "scale(1.5)",
-          position: "absolute",
-          margin: "2rem",
-          bottom: 0,
-          right: 0,
-          cursor: "pointer",
-        }}
-      />
+      <Card variant="">{card(props.name, props.description, props.date)}</Card>
+      <div onClick={() => {
+        props.deleteFun(props.id)
+        props.reload();
+        console.log("deleted");
+      }}>
+        <DeleteOutlineSharpIcon
+          sx={{
+            transform: "scale(1.5)",
+            position: "absolute",
+            margin: "2rem",
+            top: 0,
+            right: 0,
+            cursor: "pointer",
+          }}
+        />
+      </div>
+
     </Box>
   );
 }

@@ -16,7 +16,6 @@ function Sidebar() {
   };
 
   function makeActive(number) {
-   
     setIsActive(number);
   }
 
@@ -25,7 +24,7 @@ function Sidebar() {
       <ul className="side-nav">
         <li
           className={isActive == 1 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,1)}
+          onClick={makeActive.bind(this, 1)}
         >
           <Link to="/dashboard" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -37,7 +36,7 @@ function Sidebar() {
 
         <li
           className={isActive == 2 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,2)}
+          onClick={makeActive.bind(this, 2)}
         >
           <Link to="/mydocuments" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -49,7 +48,7 @@ function Sidebar() {
 
         <li
           className={isActive == 3 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,3)}
+          onClick={makeActive.bind(this, 3)}
         >
           <Link to="/medications" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -61,7 +60,7 @@ function Sidebar() {
 
         <li
           className={isActive == 4 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,4)}
+          onClick={makeActive.bind(this, 4)}
         >
           <Link to="/appointments" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -73,7 +72,7 @@ function Sidebar() {
 
         <li
           className={isActive == 5 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,5)}
+          onClick={makeActive.bind(this, 5)}
         >
           <Link to="/symptoms" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -84,7 +83,7 @@ function Sidebar() {
         </li>
         <li
           className={isActive == 6 ? classNames.active : classNames.inactive}
-          onClick={makeActive.bind(this,6)}
+          onClick={makeActive.bind(this, 6)}
         >
           <Link to="/profile" style={{ textDecoration: "none" }}>
             <a href="#" className="side-nav__link ">
@@ -93,6 +92,8 @@ function Sidebar() {
             </a>
           </Link>
         </li>
+
+       
       </ul>
     </nav>
   );

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import "./App.css";
 import Homepage from "./components/Homepage";
@@ -13,116 +13,140 @@ import MyDocuments from "./components/MyDocuments";
 import Medications from "./components/Medications";
 import Appointments from "./components/Appointments";
 import PopupCard from "./buildingblocks/PopupCard";
-import { initializeApp } from "firebase/app";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+
+
+
+import { userContext } from "./services/context";
 
 function App() {
   const [loggedIn, setloggedIn] = useState(true);
   const [togglePopup, setTogglePopup] = useState(false);
   const [chronicData, setChronicData] = useState([]);
-const firebaseConfig = {
-  apiKey: "AIzaSyBPvnhrqHg7Z0yDAH3eT3TTjKgiy9br_3o",
-  authDomain: "first-data-base-94a72.firebaseapp.com",
-  databaseURL: "https://first-data-base-94a72-default-rtdb.firebaseio.com",
-  projectId: "first-data-base-94a72",
-  storageBucket: "first-data-base-94a72.appspot.com",
-  messagingSenderId: "230595747981",
-  appId: "1:230595747981:web:b371d7281bf611f5e402c4",
-};
+  const [user, setUser] = useState("");
+  const [request, setrequest] = useState("");
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const storage = getStorage();
-const storageRef = ref(storage);
-
+    useEffect(() => {
+      if (localStorage.getItem("id")){
+        setUser(localStorage.getItem("id"));
+        let x = localStorage.getItem("id");
+        console.log(x);
+        
+      }
+    }, []);
+    
   return (
 
-    
-    <div className="container">
-      {togglePopup && (
-        <PopupCard togglePopup={setTogglePopup} chronicData={chronicData} />
-      )}
-      <Header />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
+ 
 
-          <Route
-            path="/mydocuments"
-            element={
-              loggedIn ? (
-                <MainSection component={<MyDocuments storage = {storage} />} />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route
-            path="/medications"
-            element={
-              loggedIn ? (
-                <MainSection component={<Medications />} />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route
-            path="/appointments"
-            element={
-              loggedIn ? (
-                <MainSection component={<Appointments />} />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route
-            path="/symptoms"
-            element={
-              loggedIn ? (
-                <MainSection component={<UserDashboard />} />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              loggedIn ? (
-                <MainSection
-                  component={
-                    <Profile
-                      togglePopup={setTogglePopup}
-                      setDataToggle={setChronicData}
-                      
+    <userContext.Provider value={{user, setUser}}>
+  
+        <div className="container">
+          {togglePopup && (
+            <PopupCard
+              togglePopup={setTogglePopup}
+              chronicData={chronicData}
+              request={request}
+            />
+          )}
+          <Header />
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Homepage />} />
+
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+
+              <Route
+                path="/mydocuments"
+                element={
+                  loggedIn ? (
+                    <MainSection component={<MyDocuments />} />
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route
+                path="/medications"
+                element={
+                  loggedIn ? (
+                    <MainSection
+                      component={
+                        <Medications
+                          togglePopup={setTogglePopup}
+                          setDataToggle={setChronicData}
+                          request={request}
+                        />
+                      }
                     />
-                  }
-                />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              loggedIn ? (
-                <MainSection component={<UserDashboard />} />
-              ) : (
-                "login please"
-              )
-            }
-          />
-          <Route path="*" element={"Not Found"} />
-        </Routes>
-      </BrowserRouter>
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route
+                path="/appointments"
+                element={
+                  loggedIn ? (
+                    <MainSection
+                      component={
+                        <Appointments
+                          togglePopup={setTogglePopup}
+                          setDataToggle={setChronicData}
+                          request={request}
+                        />
+                      }
+                    />
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route
+                path="/symptoms"
+                element={
+                  loggedIn ? (
+                    <MainSection component={<UserDashboard />} />
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  loggedIn ? (
+                    <MainSection
+                      component={
+                        <Profile
+                          togglePopup={setTogglePopup}
+                          setDataToggle={setChronicData}
+                        />
+                      }
+                    />
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  loggedIn ? (
+                    <MainSection component={<UserDashboard />} />
+                  ) : (
+                    "login please"
+                  )
+                }
+              />
+              <Route path="*" element={"Not Found"} />
+            </Routes>
+          </BrowserRouter>
 
-      {<Footer />}
-    </div>
+          {<Footer />}
+        </div>
+     
+    </userContext.Provider>
   );
 }
 
