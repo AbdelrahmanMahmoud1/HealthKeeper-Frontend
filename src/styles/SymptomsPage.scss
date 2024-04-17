@@ -1,0 +1,70 @@
+.cursor {
+  display: inline-block;
+  width: 1ch;
+  animation: flicker 0.5s infinite;
+  margin-bottom: 4px;
+}
+
+@keyframes flicker {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.symptoms-grid {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  flex: 0 0 100%;
+  gap: 3rem;
+
+  &-item {
+    display: flex;
+
+    flex-wrap: wrap;
+  }
+
+  &-container1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    background-color: white;
+    box-shadow: 0 1.5rem 2rem black;
+  }
+
+  &-container2 {
+    grid-column-start: 4;
+    grid-column-end: 7;
+    background-color: white;
+    box-shadow: 0 1.5rem 2rem black;
+  }
+
+  &-container3 {
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    background-color: white;
+    box-shadow: 0 1.5rem 2rem black;
+  }
+
+  &-container4 {
+    grid-column-start: 3;
+    grid-column-end: 5;
+    grid-row-start: 2;
+    background-color: white;
+    box-shadow: 0 1.5rem 2rem black;
+  }
+
+  &-container5 {
+    grid-column-start: 5;
+    grid-column-end: 7;
+    grid-row-start: 2;
+    background-color: white;
+    box-shadow: 0 1.5rem 2rem black;
+  }
+}

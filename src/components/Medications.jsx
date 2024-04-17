@@ -5,14 +5,14 @@ import MedicationCard from "../buildingblocks/MedicationCard";
 import {
   fetchMedications,
   deleteMedication,
-  addMedication
+  addMedication,
 } from "../services/UserProfileService";
 import { useEffect } from "react";
 import { userContext } from "../services/context";
 
 const Medications = (props) => {
-  const [data, setData] = useState([{}]);
-  const {user} = useContext(userContext);
+  const [data, setData] = useState([]);
+  const { user } = useContext(userContext);
   const [reload, setReload] = useState(null);
   const name = useRef();
   const time = useRef();
@@ -29,10 +29,12 @@ const Medications = (props) => {
     fun: addMedication,
   };
   useEffect(() => {
-    fetchMedications(user).then((mediactions) => {
-      setData([...mediactions.data]);
-    });
-  }, [reload]);
+    if (user) {
+      fetchMedications(user).then((mediactions) => {
+        setData([...mediactions.data]);
+      });
+    }
+  }, [reload, user]);
 
   function reloadPage() {
     alert("DELETED");
@@ -49,7 +51,6 @@ const Medications = (props) => {
       </div>
       <div className="profile__medical-details-button">
         <a
-          href="#"
           className="btn btn--green  "
           style={{ fontSize: 12, padding: "2rem" }}
           onClick={openPopup}
@@ -61,9 +62,12 @@ const Medications = (props) => {
         className="documents__cards"
         style={{ justifyContent: "space-evenly", flexWrap: "wrap" }}
       >
-        {data &&
+        {data&&
           data.map((medication) => {
+    
+
             return (
+              
               <div className="documents__cards-card" style={{ width: "80%" }}>
                 <MedicationCard
                   reload={reloadPage}

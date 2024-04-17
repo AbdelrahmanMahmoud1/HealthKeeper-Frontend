@@ -9,7 +9,7 @@ import {
 import { userContext } from "../services/context";
 const MyDocuments = () => {
   const [file, setFile] = useState(null);
-  const [documents, setDocuments] = useState([{}]);
+  const [documents, setDocuments] = useState([]);
   const [reload, setReload] = useState(null);
 
   const { user } = useContext(userContext);

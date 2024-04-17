@@ -1,34 +1,39 @@
 .symptoms-card {
   display: flex;
   flex-wrap: wrap;
-  flex: 0 0 30%;
   justify-content: center;
-
+  flex: 0 0 20%;
 
   &__list {
     list-style: none;
+
     display: flex;
 
     &-item {
-      display: flex;
-
-      flex-wrap: wrap;
-
       &-C {
         display: flex;
+    background-image: linear-gradient(to right bottom,grey, white);
 
+        justify-content: flex-start;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 10rem;
+        overflow: hidden;
+        padding: 1.5rem;
         flex-wrap: wrap;
-
-        max-width: 6rem;
-        justify-content: center;
+        color: black;
 
         &-img {
-          width: 100%;
-          display: block;
+          width: 20%;
+          display: inline-block;
         }
         &-name {
+          font-weight: bold;
+          font-size: 1.25rem;
         }
       }
     }
   }
+
 }
+

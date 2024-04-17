@@ -17,6 +17,8 @@ import PopupCard from "./buildingblocks/PopupCard";
 
 
 import { userContext } from "./services/context";
+import Symptoms from "./components/SymptomsPage";
+import SymptomsPage from "./components/SymptomsPage";
 
 function App() {
   const [loggedIn, setloggedIn] = useState(true);
@@ -106,7 +108,7 @@ function App() {
                 path="/symptoms"
                 element={
                   loggedIn ? (
-                    <MainSection component={<UserDashboard />} />
+                    <MainSection component={<SymptomsPage />} />
                   ) : (
                     "login please"
                   )

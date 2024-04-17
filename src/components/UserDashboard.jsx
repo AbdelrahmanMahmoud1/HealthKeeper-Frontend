@@ -12,17 +12,15 @@ import {
 } from "../services/UserProfileService";
 import { userContext } from "../services/context";
 const UserDashboard = () => {
-  // let data = [];
-
-  const [data, setData] = useState([]);
-
+  
   const {user} = useContext(userContext);
   const [medicationsData, setMedicationsData] = useState([]);
-  const [appointmentData, setAppointmentData] = useState([{}]);
-  const [documents, setDocuments] = useState([{}]);
+  const [appointmentData, setAppointmentData] = useState([]);
+  const [documents, setDocuments] = useState([]);
+  const [done, setDone] = useState(false)
 
   useEffect(() => {
-    console.log(user);
+    
     fetchMedications(user).then((mediactions) => {
       setMedicationsData(mediactions.data);
     });
@@ -42,7 +40,7 @@ const UserDashboard = () => {
     };
 
     fetchData();
-  }, []);
+  }, [user]);
 
   return (
     <div className="dashboard">
@@ -130,34 +128,7 @@ const UserDashboard = () => {
           )}
         </div>
       </div>
-      <div className="dashboard__symptoms">
-        <div className="u-center-text" style={{ alignSelf: "flex-start" }}>
-          <h2 className="heading-secondary">How do you feel today?</h2>
-        </div>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "0rem",
-            flexWrap: "wrap",
-
-            justifyContent: "center",
-          }}
-        >
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-          <Symptoms />
-        </div>
-      </div>
     </div>
   );
 };

@@ -39,8 +39,12 @@
     overflow-x: hidden;
   }
   &__symptoms {
+    display: flex;
+    flex-wrap: wrap;
     grid-column-start: 1;
     grid-column-end: 3;
     margin-top: 10rem;
+    justify-content: center;
+    gap: 3rem;
   }
 }
