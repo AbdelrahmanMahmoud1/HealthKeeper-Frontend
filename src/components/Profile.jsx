@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext, useRef } from "react";
 import "../styles/profile.scss";
-import img from "../assets/img/user-4.jpg";
+import img from "../assets/img/user.svg";
 import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import ReactCard from "../buildingblocks/ReactCard";
@@ -12,10 +12,16 @@ import {
   updateUser,
 } from "../services/UserProfileService";
 import { userContext } from "../services/context";
+import { NavLink  } from "react-router-dom";
+import QRCode from "react-qr-code";
+import { usePDF } from "react-to-pdf";
 const Profile = (props) => {
   const { user } = useContext(userContext);
   const [userData, setUserData] = useState({});
   const [reload, setReload] = useState(null);
+
+  
+
   const name = useRef();
   const date = useRef();
   const description = useRef();
@@ -103,6 +109,7 @@ const Profile = (props) => {
   const chronicData = ["Chronic condition", "description", "date"];
 
   const [chronicConditions, setChronicConditions] = useState([{}]);
+  const { toPDF, targetRef } = usePDF({ filename: "page.pdf" });
 
   function openPopup() {
     props.setDataToggle(formData);
@@ -120,6 +127,7 @@ const Profile = (props) => {
 
     fetchUserProfile(user).then((response) => {
      
+      console.log(response.data);
       setUserData(response.data);
     });
 
@@ -127,7 +135,7 @@ const Profile = (props) => {
       console.log(data.data);
       setChronicConditions(data.data);
     });
-  }, [user]);
+  }, [user, reload]);
 
   useEffect(() => {}, [user]);
 
@@ -152,6 +160,7 @@ const Profile = (props) => {
           Edit Profile
         </a>
       </div>
+
       <div className="profile">
         <div className="profile__image-box">
           <div className="profile__image-box-C">
@@ -233,12 +242,8 @@ const Profile = (props) => {
           </div>
 
           <div className="profile__personal-details-C">
-            <h2 className="profile__personal-details-C-label">
-              Age
-            </h2>
-            <p className="profile__personal-details-C-value">
-              {userData.age}
-            </p>
+            <h2 className="profile__personal-details-C-label">Age</h2>
+            <p className="profile__personal-details-C-value">{userData.age}</p>
           </div>
         </div>
 
@@ -268,11 +273,46 @@ const Profile = (props) => {
                   date={condition.date}
                   deleteFun={deleteChronicCondition}
                   reload={reloadPage}
+                  editable={true}
                 />
               </div>
             );
           })}
         </div>
+        <a
+          onClick={() => toPDF()}
+          className="btn btn--green  "
+          style={{ fontSize: 12, padding: "2rem", textAlign: "center" }}
+        >
+          Download QR Code
+        </a>
+
+        <NavLink to="/qrcode">
+          <a
+            className="btn   "
+            style={{
+              fontSize: 12,
+              padding: "1.5rem",
+              color: "white",
+              backgroundColor: "black",
+              width: "100%",
+              height: "100%",
+              textAlign: "center",
+            }}
+          >
+            QR code page
+          </a>
+        </NavLink>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+        }}
+        ref={targetRef}
+      >
+        {userData.url? <QRCode value={userData.url} />:"" }
+
       </div>
     </>
   );

@@ -25,6 +25,7 @@ const MyDocuments = () => {
     formData.append(file.name, file, user);
     try {
       await axios.post(
+    
         "http://127.0.0.1:8000/api/mydocuments/upload/",
         {
           name: file.name,

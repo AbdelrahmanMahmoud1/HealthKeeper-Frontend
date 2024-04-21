@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import medicalRecordIcon from "../assets/img/istockphoto-1274833939-612x612.jpg";
 import "../styles/Card.scss";
 import DeleteOutlineSharpIcon from "@mui/icons-material/DeleteOutlineSharp";
-import EditSharpIcon from "@mui/icons-material/EditSharp";
-import { fetchFilePath } from "../services/UserProfileService";
+
 const Card = (props) => {
   const [path, setPath] = useState(null);
 

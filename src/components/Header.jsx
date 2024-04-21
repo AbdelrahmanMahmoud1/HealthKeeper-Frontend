@@ -1,6 +1,6 @@
 import logo from "../assets/img/health-keeper-high-resolution-logo-transparent.png";
-import userImg from "../assets/img/user.jpg";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import userImg from "../assets/img/user.svg";
+import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 import { userContext } from "../services/context";
 import { React, useState, useEffect, useContext, useRef } from "react";
 import { fetchUserProfile } from "../services/UserProfileService";
@@ -11,11 +11,14 @@ function Header() {
   const [userData, setUserData] = useState({});
 
   useEffect(() => {
-    fetchUserProfile(user).then((response) => {
-      setUserData(response.data);
-    });
+    if (user){
+   fetchUserProfile(user).then((response) => {
+     setUserData(response.data);
+   });
 
-    return () => {};
+    }
+ 
+   
   }, [user]);
 
   return (
@@ -26,12 +29,18 @@ function Header() {
 
       {user && (
         <>
-          <nav className="user-nav">
-            <div className="user-nav__user">
-              <img src={userImg} alt="" className="user-nav__user-photo" />
-              <span className="user-nav__user-name">{userData.name}</span>
-            </div>
-          </nav>
+          <a href="/dashboard" style={
+            {
+              textDecoration: "none"
+            }
+          }>
+            <nav className="user-nav">
+              <div className="user-nav__user">
+                <img src={userImg} alt="" className="user-nav__user-photo" />
+                <span className="user-nav__user-name">{userData.name}</span>
+              </div>
+            </nav>
+          </a>
 
           <nav className="user-nav">
             <div className="user-nav__user">

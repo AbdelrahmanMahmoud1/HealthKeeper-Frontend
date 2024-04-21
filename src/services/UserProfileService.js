@@ -90,3 +90,6 @@ export function symptomsCheck(data){
     let fun = axios.post(`http://127.0.0.1:8000/api/symptoms/check`,data,{headers: {'Content-Type': 'application/json'}})
     return fun
 }
+
+
+

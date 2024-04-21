@@ -32,8 +32,8 @@ const PopupCard = (props) => {
   function request(event) {
     let object = {};
     props.chronicData.refs.map((ref) => {
-      if (ref.current.name === "Date") {
-        object["date"] = formatDate(ref.current.value);
+      if (ref.current.name === "Date" || ref.current.name === "time") {
+        object['time'] = formatDate(ref.current.value);
       } else {
         object[ref.current.name] = ref.current.value;
       }

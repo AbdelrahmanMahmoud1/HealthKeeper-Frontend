@@ -4,8 +4,17 @@ import logo from "../assets/img/health-keeper-high-resolution-logo-transparent.p
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="footer__logo-box" >
-        <img src={logo} alt="" className="footer__logo" style={{padding: "1rem",backgroundColor: "white", borderRadius:"50%"}} />
+      <div className="footer__logo-box">
+        <img
+          src={logo}
+          alt=""
+          className="footer__logo"
+          style={{
+            padding: "1rem",
+            backgroundColor: "white",
+            borderRadius: "50%",
+          }}
+        />
       </div>
       <div className="row">
         <div className="col-1-of-2">
@@ -13,20 +22,10 @@ const Footer = () => {
             <ul className="footer__list">
               <li className="footer__item">
                 <a href="" className="footer__link">
-                  {" "}
-                  Company
-                </a>
-              </li>
-              <li className="footer__item">
-                <a href="" className="footer__link">
                   Contact Us
                 </a>
               </li>
-              <li className="footer__item">
-                <a href="" className="footer__link">
-                  Carrers
-                </a>
-              </li>
+
               <li className="footer__item">
                 <a href="" className="footer__link">
                   Privacy Policy
@@ -42,18 +41,13 @@ const Footer = () => {
         </div>
         <div className="col-1-of-2">
           <p className="footer__copyright">
-            Built by{" "}
-            <a href="#" className="footer__link">
-              Jonas Schmedtmann
-            </a>{" "}
-            for his online course{" "}
-            <a href="#" className="footer__link">
-              Advanced CSS and Sass
-            </a>
-            . Copyright &copy; by Jonas Schmedtmann. You are 100% allowed to use
-            this webpage for both personal and commercial use, but NOT to claim
-            it as your own design. A credit to the original author, Jonas
-            Schmedtmann, is of course highly appreciated!
+            Get Started Today: Sign up for free and take the first step towards
+            better health management! we understand the importance of medication
+            adherence in achieving optimal health outcomes. That's why our
+            medication-saving feature is designed to be intuitive,
+            user-friendly, and effective. Join us today and experience the
+            convenience and peace of mind that comes with effortless medication
+            management
           </p>
         </div>
       </div>

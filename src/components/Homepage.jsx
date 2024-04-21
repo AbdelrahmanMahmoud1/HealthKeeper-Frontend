@@ -8,19 +8,27 @@ import Features from "./Features";
 import { useContext, useEffect, useState } from "react";
 import { fetchUserProfile } from "../services/UserProfileService";
 import { userContext } from "../services/context";
+import medicalRecord from "../assets/img/pdf-file-icon-smartphone-screen_51635-2954.jpg";
+import img2 from "../assets/img/info2.jpg";
+import img3 from "../assets/img/info3.jpg";
+import img4 from "../assets/img/stopwatch.svg";
+import img5 from "../assets/img/calendar.svg";
+import medicalRecordIcon from "../assets/img/SVG/file-text2.svg";
+
+
 
 function Homepage() {
-   const { user } = useContext(userContext);
+  const { user } = useContext(userContext);
 
-   const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState({});
 
-   useEffect(() => {
-     fetchUserProfile(user).then((response) => {
-       setUserData(response.data);
-     });
-
-     return () => {};
-   }, [user]);
+  useEffect(() => {
+    if (user) {
+      fetchUserProfile(user).then((response) => {
+        setUserData(response.data);
+      });
+    }
+  }, [user]);
 
   return (
     <div className="content">
@@ -58,9 +66,38 @@ function Homepage() {
             )}
           </div>
         </header>
-        <ApplicationInformation />
-        <ApplicationInformation />
-        <ApplicationInformation />
+
+        <div style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center"
+        }}>
+          <ApplicationInformation
+            title={"Store Medical Documents"}
+            desc={
+              "With Health Keeper you can easily upload your medical documents safely and keep a full record of your prescriptions, diagnoses, X-ray images, lab results"
+            }
+            img={medicalRecord}
+            icon={medicalRecordIcon}
+          />
+          <ApplicationInformation
+            title={"Symptom Checker"}
+            desc={
+              "Get instant insights into your symptoms and possible diagnoses."
+            }
+            img={img2}
+            icon={img4}
+          />
+          <ApplicationInformation
+            title={"Medication Tracker  "}
+            desc={
+              "Stay on top of your medications with personalized reminders and refill alerts."
+            }
+            img={img3}
+            icon={img5}
+          />
+        </div>
+
         <Features />
       </main>
     </div>

@@ -121,7 +121,6 @@ const SymptomsPage = () => {
         { symptom: "Prognosis", number: 7 },
       ],
     },
-    // Add more categories as needed
   ];
   const [chatHistory, setChatHistory] = useState([
     {
@@ -149,13 +148,14 @@ const SymptomsPage = () => {
   }, [chatHistory]);
 
   useEffect(() => {
-    console.log(userSymptoms);
   }, [userSymptoms]);
 
   function check() {
     let obj = {
       symptoms: userSymptoms,
     };
+
+    console.log(obj);
 
     symptomsCheck(obj).then((res) => {
       setChatHistory([
@@ -175,6 +175,7 @@ const SymptomsPage = () => {
         <h3>
           <br />
           Please select at maximum 17 symptoms
+         
         </h3>
       </div>
 
@@ -196,9 +197,11 @@ const SymptomsPage = () => {
               justifyContent: "space-evenly",
             }}
           >
-            {symptomArrays[0].symptoms.map((symptoms) => {
+            {symptomArrays[0].symptoms.map((symptoms,index) => {
               return (
                 <Symptoms
+
+                  key={index}
                   array={userSymptoms}
                   addSymptom={setUserSymptoms}
                   name={symptoms}
@@ -225,9 +228,10 @@ const SymptomsPage = () => {
               justifyContent: "space-evenly",
             }}
           >
-            {symptomArrays[1].symptoms.map((symptoms) => {
+            {symptomArrays[1].symptoms.map((symptoms,index) => {
               return (
                 <Symptoms
+                  key={index}
                   addSymptom={setUserSymptoms}
                   name={symptoms}
                   array={userSymptoms}
@@ -254,9 +258,10 @@ const SymptomsPage = () => {
               justifyContent: "space-evenly",
             }}
           >
-            {symptomArrays[2].symptoms.map((symptoms) => {
+            {symptomArrays[2].symptoms.map((symptoms,index) => {
               return (
                 <Symptoms
+                  key={index}
                   addSymptom={setUserSymptoms}
                   name={symptoms}
                   array={userSymptoms}
@@ -284,9 +289,10 @@ const SymptomsPage = () => {
               justifyContent: "space-evenly",
             }}
           >
-            {symptomArrays[3].symptoms.map((symptoms) => {
+            {symptomArrays[3].symptoms.map((symptoms,index) => {
               return (
                 <Symptoms
+                  key={index}
                   addSymptom={setUserSymptoms}
                   name={symptoms}
                   array={userSymptoms}
@@ -313,9 +319,10 @@ const SymptomsPage = () => {
               justifyContent: "space-evenly",
             }}
           >
-            {symptomArrays[4].symptoms.map((symptoms) => {
+            {symptomArrays[4].symptoms.map((symptoms,index) => {
               return (
                 <Symptoms
+                  key={index}
                   addSymptom={setUserSymptoms}
                   name={symptoms}
                   array={userSymptoms}

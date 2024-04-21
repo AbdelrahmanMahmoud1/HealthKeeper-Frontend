@@ -41,7 +41,7 @@ export default function ReactCard(props) {
         props.reload();
         console.log("deleted");
       }}>
-        <DeleteOutlineSharpIcon
+        {props.editable && <DeleteOutlineSharpIcon
           sx={{
             transform: "scale(1.5)",
             position: "absolute",
@@ -50,7 +50,7 @@ export default function ReactCard(props) {
             right: 0,
             cursor: "pointer",
           }}
-        />
+        />}
       </div>
 
     </Box>

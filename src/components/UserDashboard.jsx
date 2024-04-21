@@ -20,6 +20,10 @@ const UserDashboard = () => {
   const [done, setDone] = useState(false)
 
   useEffect(() => {
+
+    if (!user){
+      return
+    }
     
     fetchMedications(user).then((mediactions) => {
       setMedicationsData(mediactions.data);
@@ -51,8 +55,14 @@ const UserDashboard = () => {
 
         {medicationsData.length != 0 ? (
           <>
-            {medicationsData.map((data) => {
-              return <MedicationCard medication={data} editable={false} />;
+            {medicationsData.map((data, index) => {
+              return (
+                <MedicationCard
+                  key={index}
+                  medication={data}
+                  editable={false}
+                />
+              );
             })}
           </>
         ) : (
@@ -75,7 +85,7 @@ const UserDashboard = () => {
         <div className="appointment-items">
           {appointmentData.length != 0 ? (
             <>
-              <AppointmentCard appointment={appointmentData} />{" "}
+              <AppointmentCard appointment={appointmentData} editable={false} />{" "}
             </>
           ) : (
             <div className="dashboard__medication-empty">
@@ -128,7 +138,6 @@ const UserDashboard = () => {
           )}
         </div>
       </div>
-
     </div>
   );
 };

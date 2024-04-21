@@ -64,8 +64,7 @@ const Medications = (props) => {
       >
         {data&&
           data.map((medication) => {
-    
-
+  
             return (
               
               <div className="documents__cards-card" style={{ width: "80%" }}>

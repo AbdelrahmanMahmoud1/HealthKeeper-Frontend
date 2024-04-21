@@ -31,10 +31,13 @@ const Appointments = (props) => {
     fun: addAppointments,
   };
   useEffect(() => {
+    if (!user){
+      return
+    }
     fetchAppointments(user).then((appointment) => {
       setAppointmentData([...appointment.data]);
     });
-  }, [reload]);
+  }, [reload, user]);
 
   function reloadPage() {
     alert("DELETED");
@@ -65,6 +68,7 @@ const Appointments = (props) => {
             appointment={appointmentData}
             reload={reloadPage}
             deleteFun={deleteAppointments}
+            editable = {true}
           />
         </div>
       ) : (

@@ -26,14 +26,14 @@ const AppointmentCard = (props) => {
               style={{ position: "absolute", top: 10, right: 20, zIndex: 100000 }}
               onClick={()=> {deleteAppointment(index)}}
             >
-              <DeleteOutlineSharpIcon
+              {props.editable && <DeleteOutlineSharpIcon
                 sx={{
                   transform: "scale(1.5)",
                   margin: "2rem",
                   cursor: "pointer",
                   zIndex: 1001,
                 }}
-              />
+              />}
             </div>
             <div className="appointment-items-item-Ctext">
               <div className="appointment-items-item-Ctext-C">
